@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -10,7 +11,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t devops-demo/frontend:1.0 .'
+                bat 'docker build -t devops-demo/frontend:2.0 .'
             }
         }
 
@@ -28,24 +29,15 @@ pipeline {
 
         stage('Docker Tag') {
             steps {
-                bat 'docker tag devops-demo/frontend:1.0 ghcr.io/devops-cicd-demo1/frontend:1.0'
+                bat 'docker tag devops-demo/frontend:2.0 ghcr.io/devops-cicd-demo1/frontend:2.0'
             }
         }
 
         stage('Docker Push') {
             steps {
-                bat 'docker push ghcr.io/devops-cicd-demo1/frontend:1.0'
+                bat 'docker push ghcr.io/devops-cicd-demo1/frontend:2.0'
             }
         }
 
-        stage('Deploy') {
-            steps {
-                bat '''
-                    docker pull ghcr.io/devops-cicd-demo1/frontend:1.0
-                    docker rm -f frontend-prod 2>nul
-                    docker run -d --name frontend-prod -p 3000:80 ghcr.io/devops-cicd-demo1/frontend:1.0
-                '''
-            }
-        }
     }
 }
