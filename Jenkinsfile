@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -11,7 +12,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t devops-demo/frontend:2.0 .'
+                bat 'docker build -t devops-demo/frontend:3.0 .'
             }
         }
 
@@ -29,15 +30,16 @@ pipeline {
 
         stage('Docker Tag') {
             steps {
-                bat 'docker tag devops-demo/frontend:2.0 ghcr.io/devops-cicd-demo1/frontend:2.0'
+                bat 'docker tag devops-demo/frontend:3.0 ghcr.io/devops-cicd-demo1/frontend:3.0'
             }
         }
 
         stage('Docker Push') {
             steps {
-                bat 'docker push ghcr.io/devops-cicd-demo1/frontend:2.0'
+                bat 'docker push ghcr.io/devops-cicd-demo1/frontend:3.0'
             }
         }
 
     }
 }
+```
